@@ -57,7 +57,7 @@ $cert | Out-File -FilePath "$MountPath\Windows\System32\Cisco_Umbrella_Root_CA.c
 # Startnet.cmd
 $Content = @'
 @echo off
-title OSDCloud - Sight & Sound Theatres Startup
+title OSDCloud - Sight ^& Sound Theatres Startup
 certutil -addstore "Root" "x:\Windows\System32\Cisco_Umbrella_Root_CA.cer"
 wpeinit
 wpeutil DisableFirewall
