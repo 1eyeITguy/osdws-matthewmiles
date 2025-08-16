@@ -2,7 +2,7 @@ function Step-InstallWinPEAppPwsh {
     [CmdletBinding()]
     param (
         [System.String]
-        $AppName = 'PowerShell 7.5.1',
+        $AppName = 'PowerShell 7.5.2',
         [System.String]
         $Architecture = $global:BuildMedia.Architecture,
         [System.String]
@@ -10,9 +10,9 @@ function Step-InstallWinPEAppPwsh {
         [System.String]
         $WinPEAppsPath = $($OSDWorkspace.paths.winpe_apps),
         [System.String]
-        $amd64Url = 'https://github.com/PowerShell/PowerShell/releases/download/v7.5.1/PowerShell-7.5.1-win-x64.zip',
+        $amd64Url = 'https://github.com/PowerShell/PowerShell/releases/download/v7.5.1/PowerShell-7.5.2-win-x64.zip',
         [System.String]
-        $arm64Url = 'https://github.com/PowerShell/PowerShell/releases/download/v7.5.1/PowerShell-7.5.1-win-arm64.zip'
+        $arm64Url = 'https://github.com/PowerShell/PowerShell/releases/download/v7.5.1/PowerShell-7.5.2-win-arm64.zip'
     )
     #=================================================
     $Error.Clear()
