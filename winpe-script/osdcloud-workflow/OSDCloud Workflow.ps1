@@ -57,7 +57,7 @@ $cert | Out-File -FilePath "$MountPath\Windows\System32\Cisco_Umbrella_Root_CA.c
 # Startnet.cmd
 $Content = @'
 @echo off
-title OSDCloud - Sight ^& Sound Theatres Startup
+title OSDCloud Workspace Startup
 certutil -addstore "Root" "x:\Windows\System32\Cisco_Umbrella_Root_CA.cer"
 wpeinit
 wpeutil DisableFirewall
@@ -68,8 +68,7 @@ powershell.exe -w h -c Invoke-OSDCloudPEStartup WiFi
 powershell.exe -w h -c Invoke-OSDCloudPEStartup IPConfig
 powershell.exe -w h -c Invoke-OSDCloudPEStartup UpdateModule -Value OSD
 powershell.exe -w h -c Invoke-OSDCloudPEStartup UpdateModule -Value OSDCloud
-powershell.exe -w h -c Invoke-OSDCloudPEStartup Info
-start /wait PowerShell -NoL -C Invoke-WebPSScript 'https://osd.sight-sound.dev'
+start /wait PowerShell -NoL -C Start-OSDCloudWorkflow
 wpeutil Reboot
 pause
 '@
