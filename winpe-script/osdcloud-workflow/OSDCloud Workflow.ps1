@@ -55,6 +55,7 @@ $cert | Out-File -FilePath "$MountPath\Windows\System32\Cisco_Umbrella_Root_CA.c
 
 
 # Startnet.cmd
+# Startnet.cmd
 $Content = @'
 @echo off
 title OSDCloud Workspace Startup
@@ -68,7 +69,7 @@ powershell.exe -w h -c Invoke-OSDCloudPEStartup WiFi
 powershell.exe -w h -c Invoke-OSDCloudPEStartup IPConfig
 powershell.exe -w h -c Invoke-OSDCloudPEStartup UpdateModule -Value OSD
 powershell.exe -w h -c Invoke-OSDCloudPEStartup UpdateModule -Value OSDCloud
-start /wait PowerShell -NoL -C Start-OSDCloudWorkflow
+start /wait PowerShell -NoL -C Deploy-OSDCLoud
 wpeutil Reboot
 pause
 '@
