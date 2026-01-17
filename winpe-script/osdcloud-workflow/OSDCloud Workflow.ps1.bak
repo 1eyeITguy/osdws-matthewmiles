@@ -54,7 +54,19 @@ Write-Host -ForegroundColor DarkGray "[$(Get-Date -format G)] [$($MyInvocation.M
 $cert | Out-File -FilePath "$MountPath\Windows\System32\Cisco_Umbrella_Root_CA.cer" -Encoding ascii -Width 2000 -Force
 
 #=================================================
-# Startnet.cmd
+# SetupComplete.ps1 (to be created on OS drive after deployment)
+Write-Host -ForegroundColor DarkGray "[$(Get-Date -format G)] [$($MyInvocation.MyCommand.Source)] Downloading SetupComplete.ps1 from GitHub"
+try {
+    $SetupCompletePS1 = Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/Sight-Sound-Theatres-SysOps/osd/refs/heads/main/functions/setupcomplete.ps1' -ErrorAction Stop
+    Write-Host -ForegroundColor DarkGray "[$(Get-Date -format G)] [$($MyInvocation.MyCommand.Source)] Adding SetupComplete.ps1 to WinPE at X:\SetupComplete.ps1"
+    $SetupCompletePS1 | Out-File -FilePath "$MountPath\SetupComplete.ps1" -Encoding UTF8 -Force
+    Write-Host -ForegroundColor Green "[$(Get-Date -format G)] [$($MyInvocation.MyCommand.Source)] Successfully downloaded and saved SetupComplete.ps1"
+}
+catch {
+    Write-Host -ForegroundColor Red "[$(Get-Date -format G)] [$($MyInvocation.MyCommand.Source)] Failed to download SetupComplete.ps1: $($_.Exception.Message)"
+}
+
+#=================================================
 # Startnet.cmd
 $Content = @'
 @echo off
@@ -72,7 +84,7 @@ powershell.exe -w h -c Invoke-OSDCloudPEStartup UpdateModule -Value OSDCloud
 start /wait PowerShell -NoL -C Deploy-OSDCloud
 if not exist "C:\Windows\Setup\Scripts" mkdir "C:\Windows\Setup\Scripts"
 (echo %%windir%%\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy ByPass -File C:\Windows\Setup\scripts\SetupComplete.ps1) > "C:\Windows\Setup\Scripts\SetupComplete.cmd"
-powershell.exe -ExecutionPolicy Bypass -Command "Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/Sight-Sound-Theatres-SysOps/osd/refs/heads/main/functions/setupcomplete.ps1' | Out-File -FilePath 'C:\Windows\Setup\Scripts\SetupComplete.ps1' -Encoding UTF8 -Force"
+copy /y "X:\SetupComplete.ps1" "C:\Windows\Setup\Scripts\SetupComplete.ps1"
 wpeutil Reboot
 pause
 '@
