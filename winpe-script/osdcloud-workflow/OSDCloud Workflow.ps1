@@ -69,7 +69,7 @@ powershell.exe -w h -c Invoke-OSDCloudPEStartup WiFi
 powershell.exe -w h -c Invoke-OSDCloudPEStartup IPConfig
 powershell.exe -w h -c Invoke-OSDCloudPEStartup UpdateModule -Value OSD
 powershell.exe -w h -c Invoke-OSDCloudPEStartup UpdateModule -Value OSDCloud
-start /wait PowerShell -NoL -C Deploy-OSDCloud
+start /wait PowerShell -NoL -C Deploy-OSDCloud -Name Recast
 if not exist "C:\Windows\Setup\Scripts" mkdir "C:\Windows\Setup\Scripts"
 (echo %%windir%%\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy ByPass -File C:\Windows\Setup\scripts\SetupComplete.ps1) > "C:\Windows\Setup\Scripts\SetupComplete.cmd"
 powershell.exe -ExecutionPolicy Bypass -Command "Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/Sight-Sound-Theatres-SysOps/osd/refs/heads/main/functions/setupcomplete.ps1' | Out-File -FilePath 'C:\Windows\Setup\Scripts\SetupComplete.ps1' -Encoding UTF8 -Force"
