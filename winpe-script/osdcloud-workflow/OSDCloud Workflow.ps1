@@ -73,7 +73,8 @@ start /wait PowerShell -NoL -C Deploy-OSDCloud -Name Recast
 if not exist "C:\Windows\Setup\Scripts" mkdir "C:\Windows\Setup\Scripts"
 (echo %%windir%%\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy ByPass -File C:\Windows\Setup\scripts\SetupComplete.ps1) > "C:\Windows\Setup\Scripts\SetupComplete.cmd"
 powershell.exe -ExecutionPolicy Bypass -Command "Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/Sight-Sound-Theatres-SysOps/osd/refs/heads/main/functions/setupcomplete.ps1' | Out-File -FilePath 'C:\Windows\Setup\Scripts\SetupComplete.ps1' -Encoding UTF8 -Force"
-wpeutil Reboot
+start /wait PowerShell -NoProfile -Command "for ($i = 30; $i -gt 0; $i--) { Write-Host 'Rebooting in $i seconds... Press Ctrl+C to cancel' -ForegroundColor Cyan; Start-Sleep -Seconds 1 }; exit 0"
+if %errorlevel% equ 0 wpeutil Reboot
 pause
 '@
 Write-Host -ForegroundColor DarkGray "[$(Get-Date -format G)] [$($MyInvocation.MyCommand.Source)] Adding $MountPath\Windows\System32\startnet.cmd"
